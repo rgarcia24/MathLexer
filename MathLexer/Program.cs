@@ -10,16 +10,14 @@ namespace MathLexer
     {
         static void Main(string[] args)
         {
+            // Grab the equation from user input
             Console.Write("Enter an Equation to Tokenize: ");
             string equation = Console.ReadLine();
+
+            // Initialize Lexer class and Tokenize the equation
             Lexer lexer = new Lexer(equation);
-
             List<Token> tokens = lexer.Tokenize();
-            foreach (Token token in tokens)
-            {
-                Console.WriteLine($"Token: {token.tokenName}, Value: {token.attributeValue} ");
-            }
-
+   
             Console.Write("\n\nPress any key to exit....");
             Console.ReadKey();
         }

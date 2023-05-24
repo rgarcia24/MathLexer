@@ -36,15 +36,18 @@ namespace MathLexer
                 {
                     case '+':
                         tokens.Add(new Token(Token.TokenType.PLUS, "+"));
+                        Console.WriteLine($"Token: {Token.TokenType.PLUS}, Value: + ");
                         break;
                     case '-':
                         tokens.Add(new Token(Token.TokenType.MINUS, "-"));
+                        Console.WriteLine($"Token: {Token.TokenType.MINUS}, Value: - ");
                         break;
                     default:
                         if (IsDigit(currentChar))
                         {
                             string integer = AcceptInteger();
                             tokens.Add(new Token(Token.TokenType.INTEGER, integer));
+                            Console.WriteLine($"Token: {Token.TokenType.INTEGER}, Value: {integer}");
                         }
                         else
                         {
