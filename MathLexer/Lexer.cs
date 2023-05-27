@@ -21,7 +21,7 @@ namespace MathLexer
 
         private StringBuilder currentToken = new StringBuilder();
         private Token.TokenState currentState = Token.TokenState.Start;
-
+       
         public  void Tokenize(string equation)
         {
           
@@ -88,7 +88,13 @@ namespace MathLexer
                         break;
 
                     case Token.TokenState.Identifier:
-                     
+                        if (char.IsLetter(c) || c == '_')
+                        {
+                            nextChar(Token.TokenState.Identifier, c);
+                        }else
+                        {
+                            produceToken(Token.TokenType.Identifier, currentToken, c);
+                        }
                         
                         break;
 
@@ -114,17 +120,25 @@ namespace MathLexer
                         break;
 
                     case Token.TokenState.String:
+                        if(c == '"')
+                        {
+                            produceToken(Token.TokenType.String, currentToken);
+                        }
+                        else
+                        {
+                            nextChar(Token.TokenState.String, c);
+                        }
                         break;
 
                     case Token.TokenState.WhiteSpace:
               
-                        if(c == ' ')
+                        if(char.IsWhiteSpace(c))
                         {
                             nextChar(Token.TokenState.WhiteSpace, c);
                         }
                         else
                         {
-                            produceToken(Token.TokenType.Whitespace, new StringBuilder("' '"), c);
+                            produceToken(Token.TokenType.Whitespace, currentToken, c);
                         }
                         break;
                 }
@@ -144,6 +158,16 @@ namespace MathLexer
                 case Token.TokenState.Operator:
                     handleOperators(currentToken.ToString());
                     break;
+                case Token.TokenState.String:
+                    produceToken(Token.TokenType.String, currentToken);
+                    break;
+                case Token.TokenState.Identifier:
+                    produceToken(Token.TokenType.Identifier, currentToken);
+                    break;
+                case Token.TokenState.WhiteSpace:
+                    produceToken(Token.TokenType.Whitespace, currentToken);
+                    break;
+                
             }
         }
 
@@ -162,7 +186,7 @@ namespace MathLexer
                     nextChar(Token.TokenState.Operator, c);
                     break;
                 case '"':
-                    nextChar(Token.TokenState.String, c);
+                    nextChar(Token.TokenState.String);
                     break;
                 case char whitespace when char.IsWhiteSpace(whitespace):
                     nextChar(Token.TokenState.WhiteSpace, c);
@@ -215,6 +239,10 @@ namespace MathLexer
             currentState = state;
             currentToken.Append(c);
        }
+        private void nextChar(Token.TokenState state)
+        {
+            currentState = state;
+        }
 
 
       private void handleNumbers(char c)
@@ -273,6 +301,12 @@ namespace MathLexer
                 case "!=":
                     produceToken(Token.OperatorType.NotEqual, currentToken, c);
                     break;
+                default:
+                    Console.WriteLine($"Unexpected operator: {currentToken}");
+                    Console.Write("Press any key to exit...");
+                    Console.ReadKey();
+                    Environment.Exit(1);
+                    break;
             }
           
         }
@@ -318,6 +352,12 @@ namespace MathLexer
                     break;
                 case "!=":
                     produceToken(Token.OperatorType.NotEqual, currentToken);
+                    break;
+                default:
+                    Console.WriteLine($"Unexpected operator: {currentToken}");
+                    Console.Write("Press any key to exit...");
+                    Console.ReadKey();
+                    Environment.Exit(1);
                     break;
             }
 
