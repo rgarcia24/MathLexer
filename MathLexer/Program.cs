@@ -10,16 +10,20 @@ namespace MathLexer
     {
         static void Main(string[] args)
         {
-            // Grab the equation from user input
-            Console.Write("Enter an Equation to Tokenize: ");
-            string equation = Console.ReadLine();
+            
+                // Grab the equation from user input
+                Console.Write("Enter an Equation to Tokenize: ");
+                string equation = Console.ReadLine();
 
-            // Initialize Lexer class and Tokenize the equation
-            Lexer lexer = new Lexer(equation);
-            List<Token> tokens = lexer.Tokenize();
-   
-            Console.Write("\n\nPress any key to exit....");
-            Console.ReadKey();
+                // Initialize Lexer class and Tokenize the equation
+                Lexer MathLexer = new Lexer();
+                 MathLexer.Tokenize(equation);
+
+                Console.Write("\n\nPress any key to exit....");
+                Console.ReadKey();
+            
+         
+       
         }
     }
 }
