@@ -37,9 +37,17 @@ namespace MathLexer
                         break;
 
                     case Token.TokenState.MaybeHex:
-                       if(c == 'x')
+                        if (c == 'x')
                         {
                             nextChar(Token.TokenState.Hexadecimal, c);
+                        }
+                        else if (char.IsWhiteSpace(c))
+                        {
+                            produceToken(Token.TokenType.Integer, currentToken, c);
+                        }
+                        else if (c == '.')
+                        {
+                            nextChar(Token.TokenState.Float, c);
                         }
                         else
                         {
