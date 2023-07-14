@@ -9,62 +9,27 @@ namespace MathLexer
     public class Token
     {
         public TokenType tokenName { get; }
-        public string attributeValue { get; }
-        public OperatorType opType { get; }
-        public enum TokenState
-        {
-            Start,
-            Integer,
-            Float,
-            Identifier,
-            Operator,
-            Hexadecimal,
-            String,
-            MaybeHex,
-            WhiteSpace
-        }
-
-        public enum TokenType
-        {
-            Integer,
-            Float,
-            Identifier,
-            Operator,
-            Hexadecimal,
-            String,
-            Whitespace
-        }
-        public enum OperatorType
-        {
-            Plus,
-            Minus,
-            Multiply,
-            Divide,
-            Modulus,
-            Assign,
-            LessThan,
-            GreaterThan,
-            LessThanOrEqual,
-            GreaterThanOrEqual,
-            Equal,
-            NotEqual,
-            Not
-        }
+        public string tokenValue { get; }
 
         public Token(TokenType type, string value)
         {
             tokenName = type;
-            attributeValue = value;
-            
+            tokenValue = value;
         }
-        public Token(TokenType type, string value, OperatorType operatorType)
+        public string toString()
         {
-            tokenName = type;
-            attributeValue = value;
-            opType = operatorType;
+            return $"Token: {tokenName} Value: {tokenValue}";
         }
-
-
-
     }
+    public enum TokenType
+    {
+        Integer,
+        Identifier,
+        Operator,
+        Semicolon,
+        Whitespace,
+        Equals,
+    }
+
+   
 }
